@@ -16,6 +16,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AddressService addressService;
+
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         return convertToDTO(user);
@@ -40,4 +43,20 @@ public class UserService {
         }).collect(Collectors.toList()));
         return userDTO;
     }
+
+
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = convertToEntity(userDTO);
+        user = userRepository.save(user);
+        return convertToDTO(user);
     }
+
+    // Helper method to convert UserDTO to UserEntity
+    private User convertToEntity(UserDTO userDTO) {
+        User userEntity = new User();
+        userEntity.setName(userDTO.getName());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setAddresses(addressService.mapToEntityList(userDTO.getAddresses()));
+        return userEntity;
+    }
+}
