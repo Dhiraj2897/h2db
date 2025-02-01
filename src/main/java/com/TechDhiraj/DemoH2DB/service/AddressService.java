@@ -2,10 +2,11 @@ package com.TechDhiraj.DemoH2DB.service;
 
 import com.TechDhiraj.DemoH2DB.dto.AddressDTO;
 import com.TechDhiraj.DemoH2DB.entity.Address;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class AddressService {
 
     // Convert AddressDTO to Address entity
